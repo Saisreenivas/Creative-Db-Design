@@ -175,7 +175,7 @@ var Connector = function(params) {
     
     
     var line;
-    $( document ).ready(function() {
+    $( document ).ready(function() {    
         console.log( "ready!" );
     
         var c1=new Connector({ele1: 'a', ele2: 'b', lineStyle: '1px solid red' })
@@ -186,21 +186,21 @@ var Connector = function(params) {
         Setup(c2, 'a');
         Setup(c2, 'c');
     
-        var c3=new Connector({ele1: 'a', ele2: 'd', lineStyle: '1px solid red' })
-        Setup(c3, 'a');
-        Setup(c3, 'd');
+        // var c3=new Connector({ele1: 'a', ele2: 'd', lineStyle: '1px solid red' })
+        // Setup(c3, 'a');
+        // Setup(c3, 'd');
         
         var c4=new Connector({ele1: 'b', ele2: 'c'})
         Setup(c4, 'b');
         Setup(c4, 'c');	
     
-        var c5=new Connector({ele1: 'b', ele2: 'd'})
-        Setup(c5, 'b');
-        Setup(c5, 'd');	
+        // var c5=new Connector({ele1: 'b', ele2: 'd'})
+        // Setup(c5, 'b');
+        // Setup(c5, 'd');	
         
-        var c6=new Connector({ele1: 'c', ele2: 'd'})
-        Setup(c6, 'c');
-        Setup(c6, 'd');
+        // var c6=new Connector({ele1: 'c', ele2: 'd'})
+        // Setup(c6, 'c');
+        // Setup(c6, 'd');
     
     
         function Setup(connector, id) {
