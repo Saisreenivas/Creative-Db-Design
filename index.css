@@ -1,0 +1,24 @@
+.thing {
+    width: 200px;
+    height: 100px;
+    background: transparent;
+    position: absolute;
+    border: 1px solid #666666;
+  }
+  
+  .thing span {
+    display: block;
+    margin-left: 95px;
+    margin-top: 40px;
+  }
+  
+  .muConnector {
+    position: absolute;
+    border-left: 1px dashed red;
+    z-index: 100;
+    -webkit-transform-origin: top left;
+    -moz-transform-origin: top left;
+    -o-transform-origin: top left;
+    -ms-transform-origin: top left;
+    transform-origin: top left;
+  }
