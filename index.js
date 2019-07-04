@@ -59,6 +59,7 @@ var Connector = function(params) {
     this.line = $('#L'+ this.id);
     this.line.css({ position: 'absolute', 'border-left': this.lineStyle, 'z-index': -100 }) 
     
+
     // We may need to store the offsets of each element that we are connecting.
     this.offsets=[];
     this.offsets[ele1]=new pos;
@@ -77,6 +78,7 @@ var Connector = function(params) {
     */	
     Connector.prototype.link=function link() {
     
+        // console.log(this.ele1.offset() + "  " + this.ele1.width());
         var originX = this.ele1.offset().left + this.ele1.outerWidth() / 2;
         var originY = this.ele1.offset().top + this.ele1.outerHeight() / 2;
       
@@ -93,8 +95,8 @@ var Connector = function(params) {
     
      
         l = l - ( adj1.hp + adj2.hp)
-        
-        this.line.css({ left: originX, height: l, width: 0, top: originY +  adj1.hp })
+        // +  adj1.hp 
+        this.line.css({ left: originX, height: l, width: 0, top: originY + adj1.hp})
             .css('-webkit-transform', 'rotate(' + angle + 'deg)')
             .css('-moz-transform', 'rotate(' + angle + 'deg)')
             .css('-o-transform', 'rotate(' + angle + 'deg)')
@@ -178,21 +180,36 @@ var Connector = function(params) {
     $( document ).ready(function() {    
         console.log( "ready!" );
     
-        var c1=new Connector({ele1: 'a', ele2: 'b', lineStyle: '1px solid red' })
-        Setup(c1, 'a');
-        Setup(c1, 'b');
+        var c1=new Connector(
+            {
+                ele1: 'col_pk', 
+                ele2: 'col_sk', 
+                lineStyle: '1px solid red', 
+                ele1Pos: 4,
+                ele2Pos: 2
+            })
         
-        var c2=new Connector({ele1: 'a', ele2: 'c', lineStyle: '1px solid red' })
-        Setup(c2, 'a');
-        Setup(c2, 'c');
+        Setup(c1, 'a', "col_sk");
+        Setup(c1, 'b', "col_pk");
+        
+        // var c2=new Connector(
+        //     {
+        //         ele1: 'a', 
+        //         ele2: 'c', 
+        //         lineStyle: '1px solid red',
+        //         ele1Pos: 2,
+        //         ele2Pos: 3
+        //      })
+        // Setup(c2, 'a');
+        // Setup(c2, 'c');
     
         // var c3=new Connector({ele1: 'a', ele2: 'd', lineStyle: '1px solid red' })
         // Setup(c3, 'a');
         // Setup(c3, 'd');
         
-        var c4=new Connector({ele1: 'b', ele2: 'c'})
-        Setup(c4, 'b');
-        Setup(c4, 'c');	
+        // var c4=new Connector({ele1: 'b', ele2: 'c'})
+        // Setup(c4, 'b');
+        // Setup(c4, 'c');	
     
         // var c5=new Connector({ele1: 'b', ele2: 'd'})
         // Setup(c5, 'b');
@@ -203,20 +220,21 @@ var Connector = function(params) {
         // Setup(c6, 'd');
     
     
-        function Setup(connector, id) {
+        function Setup(connector, id, col) {
             var ele=$('#'+id);
+            var colId=$('#'+col);
             ele.on('mousedown.muConnector', function(e){
                 
                 //#critical: tell the connector about the starting position when the mouse goes down.
-                connector.offsets[id].left=e.pageX - ele.offset().left;
-                connector.offsets[id].top=e.pageY - ele.offset().top;
+                connector.offsets[col].left=e.pageX - colId.offset().left;
+                connector.offsets[col].top=e.pageY - colId.offset().top;
             
                 e.preventDefault();
                 
                 //hook the mouse move			
                 ele.on('mousemove.muConnector', function(e){
-                   ele.css({left: e.pageX - connector.offsets[id].left, top: e.pageY - connector.offsets[id].top}); //element position = mouse - offset
-                  connector.moved(e, ele); // #critical: call the moved() function to update the connector position.
+                   ele.css({left: e.pageX - connector.offsets[col].left, top: e.pageY - connector.offsets[col].top}); //element position = mouse - offset
+                  connector.moved(e, colId); // #critical: call the moved() function to update the connector position.
                 });
                 
                 //define mouse up to cancel moving and mouse up, they are recreated each mousedown
